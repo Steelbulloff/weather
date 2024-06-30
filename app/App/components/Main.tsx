@@ -4,7 +4,7 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import Loader from "./Loader";
 import Typography from "antd/es/typography/Typography";
-const key = "0e248abb655842a999a160217242306";
+const key = "your API key";
 import { InfoCircleOutlined } from "@ant-design/icons";
 
 const period = [
