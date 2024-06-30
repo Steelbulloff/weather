@@ -6,6 +6,7 @@ import Loader from "./Loader";
 import Typography from "antd/es/typography/Typography";
 const key = "0e248abb655842a999a160217242306";
 import { InfoCircleOutlined } from "@ant-design/icons";
+import WeaterInfo from "./WeatherInfo";
 
 const period = [
   "snow",
@@ -17,7 +18,7 @@ const period = [
   "night",
   "day",
 ];
-
+export let dataWeatherEx: any = "";
 export default function Main() {
   const [dataWeather, setDataWeather] = useState<any>({});
   const [loading, setLoading] = useState(true);
@@ -68,13 +69,14 @@ export default function Main() {
     fetchData();
   }, []);
   console.log(dataWeather);
+  dataWeatherEx = dataWeather;
   return (
     <div id={period[0]}>
       {loading ? (
         <Loader />
       ) : (
-        <div>
-          <div className="flex w-full gap-2 items-center justify-center bottom-1/4 fixed">
+        <div className="flex max-sm:flex-col">
+          <div className="flex w-full gap-2 items-center justify-center max-sm:flex-col ">
             <div id="temperature" className="">
               <Title style={{ fontSize: "70px" }}>
                 {dataWeather.current.temp_c}°
@@ -93,8 +95,10 @@ export default function Main() {
               priority={false}
             />
           </div>
-          <div className="flex justify-end">
-            <InfoCircleOutlined style={{ fontSize: "64px" }} />
+
+          <div className="w-1/3 bg-transparent h-screen backdrop-blur-sm max-sm:hidden">
+            {/* <InfoCircleOutlined style={{ fontSize: "64px" }} /> */}
+            {/* <WeaterInfo /> */}
           </div>
         </div>
       )}
