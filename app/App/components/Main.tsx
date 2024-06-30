@@ -3,9 +3,7 @@ import Title from "antd/es/typography/Title";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import Loader from "./Loader";
-import Typography from "antd/es/typography/Typography";
 const key = "0e248abb655842a999a160217242306";
-import { InfoCircleOutlined } from "@ant-design/icons";
 import WeaterInfo from "./WeatherInfo";
 
 const period = [
@@ -97,8 +95,7 @@ export default function Main() {
           </div>
 
           <div className="w-1/3 bg-transparent h-screen backdrop-blur-sm max-sm:hidden">
-            {/* <InfoCircleOutlined style={{ fontSize: "64px" }} /> */}
-            {/* <WeaterInfo /> */}
+            <WeaterInfo />
           </div>
         </div>
       )}
