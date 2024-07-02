@@ -10,15 +10,17 @@
   background-image: url(/bg-winter.jpg);
   background-repeat: no-repeat;
   background-size: 100% 100%;
-  width: 100vw;
-  height: 100vh;
+  background-attachment: fixed;
+  /* width: 100vw;
+  height: 100vh; */
 }
 @media screen and (max-width: 580px) {
   #snow {
     background-image: url(/bg-winter-phone.jpg);
     background-repeat: no-repeat;
     background-size: 100% 100%;
-    width: 100vw;
-    height: 100vh;
+    background-attachment: fixed;
+    /* width: 100vw;
+    height: 100vh; */
   }
 }

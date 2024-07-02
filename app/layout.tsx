@@ -25,6 +25,19 @@ export default function RootLayout({
               components: {
                 Typography: {
                   titleMarginTop: 0,
+                  fontFamily: "Robot",
+                  // titleMarginBottom: 0,
+                  fontWeightStrong: 300,
+                },
+                Input: {
+                  colorBgContainer: "transparent",
+                  colorBorderBg: "none",
+                  colorBorder: "transparent",
+                  colorTextPlaceholder: "white",
+                  addonBg: "transparent",
+                  activeBorderColor: "none",
+                  hoverBorderColor: "transaprent",
+                  activeShadow: "none",
                 },
               },
               token: {

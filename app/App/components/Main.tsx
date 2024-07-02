@@ -5,8 +5,9 @@ import { useEffect, useState } from "react";
 import Loader from "./Loader";
 const key = "0e248abb655842a999a160217242306";
 import WeaterInfo from "./WeatherInfo";
+import { LeftCircleOutlined, RightCircleOutlined } from "@ant-design/icons";
 
-const period = [
+const period: any = [
   "snow",
   "rain",
   "cloud",
@@ -17,6 +18,7 @@ const period = [
   "day",
 ];
 export let dataWeatherEx: any = "";
+export let celcy: string = "°";
 export default function Main() {
   const [dataWeather, setDataWeather] = useState<any>({});
   const [loading, setLoading] = useState(true);
@@ -66,15 +68,22 @@ export default function Main() {
     };
     fetchData();
   }, []);
-  console.log(dataWeather);
+  // console.log(dataWeather);
   dataWeatherEx = dataWeather;
+
+  const [showDop, setShowDop] = useState(false);
+  const showDopBtn = document.getElementById("show-button");
+  const hiddenDopBtn = document.getElementById("hidden-button");
+
+  const dopInfo = document.getElementById("dop-info");
+
   return (
-    <div id={period[0]}>
+    <div id={period[0]} className="max-sm:snap-x max-sm:snap-mandatory">
       {loading ? (
         <Loader />
       ) : (
-        <div className="flex max-sm:flex-col">
-          <div className="flex w-full gap-2 items-center justify-center max-sm:flex-col ">
+        <div className="flex max-sm:flex-col ">
+          <div className="flex w-full gap-2 items-center justify-center max-sm:flex-col h-screen max-sm:snap-centre">
             <div id="temperature" className="">
               <Title style={{ fontSize: "70px" }}>
                 {dataWeather.current.temp_c}°
@@ -93,9 +102,36 @@ export default function Main() {
               priority={false}
             />
           </div>
-
-          <div className="w-1/3 bg-transparent h-screen backdrop-blur-sm max-sm:hidden">
-            <WeaterInfo />
+          <div className="flex items-start max-sm:snap-centre">
+            <div id="show-hidden-buttons" className="max-sm:hidden">
+              <div
+                id="show-button"
+                onClick={() => {
+                  dopInfo?.classList.remove("hidden");
+                  showDopBtn?.classList.add("hidden");
+                  hiddenDopBtn?.classList.remove("hidden");
+                }}
+              >
+                <LeftCircleOutlined style={{ fontSize: "64px" }} />
+              </div>
+              <div
+                id="hidden-button"
+                className="hidden"
+                onClick={() => {
+                  dopInfo?.classList.add("hidden");
+                  showDopBtn?.classList.remove("hidden");
+                  hiddenDopBtn?.classList.add("hidden");
+                }}
+              >
+                <RightCircleOutlined style={{ fontSize: "64px" }} />
+              </div>
+            </div>
+            <div
+              id="dop-info"
+              className="hidden w-full bg-transparent h-screen backdrop-blur-sm max-sm:w-full max-sm:block "
+            >
+              <WeaterInfo />
+            </div>
           </div>
         </div>
       )}
