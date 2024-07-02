@@ -72,10 +72,6 @@ export default function Main() {
   dataWeatherEx = dataWeather;
 
   const [showDop, setShowDop] = useState(false);
-  const showDopBtn = document.getElementById("show-button");
-  const hiddenDopBtn = document.getElementById("hidden-button");
-
-  const dopInfo = document.getElementById("dop-info");
 
   return (
     <div id={period[0]} className="max-sm:snap-x max-sm:snap-mandatory">
@@ -106,21 +102,18 @@ export default function Main() {
             <div id="show-hidden-buttons" className="max-sm:hidden">
               <div
                 id="show-button"
+                className={`${showDop ? "hidden" : ""}`}
                 onClick={() => {
-                  dopInfo?.classList.remove("hidden");
-                  showDopBtn?.classList.add("hidden");
-                  hiddenDopBtn?.classList.remove("hidden");
+                  setShowDop(true);
                 }}
               >
                 <LeftCircleOutlined style={{ fontSize: "64px" }} />
               </div>
               <div
                 id="hidden-button"
-                className="hidden"
+                className={`${!showDop ? "hidden" : ""}`}
                 onClick={() => {
-                  dopInfo?.classList.add("hidden");
-                  showDopBtn?.classList.remove("hidden");
-                  hiddenDopBtn?.classList.add("hidden");
+                  setShowDop(false);
                 }}
               >
                 <RightCircleOutlined style={{ fontSize: "64px" }} />
@@ -128,7 +121,9 @@ export default function Main() {
             </div>
             <div
               id="dop-info"
-              className="hidden w-full bg-transparent h-screen backdrop-blur-sm max-sm:w-full max-sm:block "
+              className={`${
+                !showDop ? "hidden" : ""
+              } w-full bg-transparent h-screen backdrop-blur-sm max-sm:w-full max-sm:block `}
             >
               <WeaterInfo />
             </div>
