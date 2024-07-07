@@ -14,9 +14,57 @@
   /* width: 100vw;
   height: 100vh; */
 }
+#summer {
+  background-image: url(/bg-summer.jpg);
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  background-attachment: fixed;
+  /* width: 100vw;
+  height: 100vh; */
+}
+#autumn {
+  background-image: url(/bg-autumn.jpg);
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  background-attachment: fixed;
+  /* width: 100vw;
+  height: 100vh; */
+}
+#spring {
+  background-image: url(/bg-spring.jpg);
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  background-attachment: fixed;
+  /* width: 100vw;
+  height: 100vh; */
+}
 @media screen and (max-width: 580px) {
   #snow {
     background-image: url(/bg-winter-phone.jpg);
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    background-attachment: fixed;
+    /* width: 100vw;
+    height: 100vh; */
+  }
+  #summer {
+    background-image: url(/bg-summer-phone.jpg);
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    background-attachment: fixed;
+    /* width: 100vw;
+    height: 100vh; */
+  }
+  #autumn {
+    background-image: url(/bg-autumn-phone.jpg);
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    background-attachment: fixed;
+    /* width: 100vw;
+    height: 100vh; */
+  }
+  #spring {
+    background-image: url(/bg-spring-phone.jpg);
     background-repeat: no-repeat;
     background-size: 100% 100%;
     background-attachment: fixed;

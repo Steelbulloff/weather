@@ -2,6 +2,7 @@ import { Typography } from "antd";
 import { celcy, dataWeatherEx } from "./Main";
 import Title from "antd/es/typography/Title";
 import Image from "next/image";
+import { SunOutlined } from "@ant-design/icons";
 
 export default function WeatherDetails() {
   return (
@@ -64,6 +65,20 @@ export default function WeatherDetails() {
               src={"/wind.svg"}
               alt="Скорость ветра"
             ></Image>
+          </div>
+        </div>
+        {/* Индекс ультрафиолета */}
+        <div className="flex justify-between items-center">
+          <Typography>Индекс ультрафиолета</Typography>
+          <div className="flex items-center gap-2">
+            <Typography>{dataWeatherEx.current.uv}</Typography>
+            {/* <Image
+              width={16}
+              height={16}
+              src={"/wind.svg"}
+              alt="Индекс ультрафиолета"
+            ></Image> */}
+            <SunOutlined />
           </div>
         </div>
       </div>

@@ -6,17 +6,8 @@ import Loader from "./Loader";
 const key = "0e248abb655842a999a160217242306";
 import WeaterInfo from "./WeatherInfo";
 import { LeftCircleOutlined, RightCircleOutlined } from "@ant-design/icons";
+import Seasons, { correctSeason, periodArray } from "./Seasons";
 
-const period: any = [
-  "snow",
-  "rain",
-  "cloud",
-  "clear",
-  "tunder",
-  "smoke",
-  "night",
-  "day",
-];
 export let dataWeatherEx: any = "";
 export let celcy: string = "°";
 export default function Main() {
@@ -67,19 +58,19 @@ export default function Main() {
       );
     };
     fetchData();
+    console.log(dataWeather);
   }, []);
-  // console.log(dataWeather);
   dataWeatherEx = dataWeather;
 
   const [showDop, setShowDop] = useState(false);
 
   return (
-    <div id={period[0]} className="max-sm:snap-x max-sm:snap-mandatory">
+    <div id={correctSeason} className="overflow-auto bg-slate-500">
       {loading ? (
         <Loader />
       ) : (
-        <div className="flex max-sm:flex-col ">
-          <div className="flex w-full gap-2 items-center justify-center max-sm:flex-col h-screen max-sm:snap-centre">
+        <div className="flex max-sm:flex-col overflow-y-auto snap-mandatory snap-y ">
+          <div className="flex w-full gap-2 items-center justify-center max-sm:flex-col h-screen snap-center">
             <div id="temperature" className="">
               <Title style={{ fontSize: "70px" }}>
                 {dataWeather.current.temp_c}°
@@ -98,7 +89,7 @@ export default function Main() {
               priority={false}
             />
           </div>
-          <div className="flex items-start max-sm:snap-centre">
+          <div className="flex items-start snap-center">
             <div id="show-hidden-buttons" className="max-sm:hidden">
               <div
                 id="show-button"
@@ -130,6 +121,7 @@ export default function Main() {
           </div>
         </div>
       )}
+      <Seasons />
     </div>
   );
 }
