@@ -68,8 +68,8 @@ export default function Main() {
       {loading ? (
         <Loader />
       ) : (
-        <div className="flex max-sm:flex-col overflow-y-auto snap-mandatory snap-y ">
-          <div className="flex w-full gap-2 items-center justify-center max-sm:flex-col h-screen snap-center">
+        <div className="flex max-sm:flex-col    ">
+          <div className="flex w-full gap-2 items-center justify-center max-sm:flex-col h-screen ">
             <div id="temperature" className="">
               <Title style={{ fontSize: "70px" }}>
                 {dataWeather.current.temp_c}°
@@ -88,7 +88,7 @@ export default function Main() {
               priority={false}
             />
           </div>
-          <div className="flex items-start snap-center">
+          <div className="flex items-start ">
             <div id="show-hidden-buttons" className="max-sm:hidden">
               <div
                 id="show-button"
