@@ -7,8 +7,8 @@ import { SunOutlined } from "@ant-design/icons";
 export default function WeatherDetails() {
   return (
     <div>
-      <Title level={4} style={{ fontFamily: "Roboto" }}>
-        Подробная информация о погоде
+      <Title level={3} style={{ fontFamily: "Roboto" }}>
+        Сейчас
       </Title>
       <div className="flex flex-col">
         <Title level={4}>{dataWeatherEx.current.condition.text}</Title>
@@ -72,12 +72,6 @@ export default function WeatherDetails() {
           <Typography>Индекс ультрафиолета</Typography>
           <div className="flex items-center gap-2">
             <Typography>{dataWeatherEx.current.uv}</Typography>
-            {/* <Image
-              width={16}
-              height={16}
-              src={"/wind.svg"}
-              alt="Индекс ультрафиолета"
-            ></Image> */}
             <SunOutlined />
           </div>
         </div>

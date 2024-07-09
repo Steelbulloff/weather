@@ -12,13 +12,14 @@ export const periodArray: any = [
   "smoke",
   "night",
   "day",
+  "another",
 ];
 export let correctSeason: any = "";
 export const date = new Date();
 export const mounth = date.getMonth();
 
 export default function Seasons(): any {
-  const [Period, setPeriod] = useState<Number>(0);
+  const [Period, setPeriod] = useState<Number>(11);
   correctSeason = periodArray[Period.toString()];
   useEffect(() => {
     console.log(mounth);

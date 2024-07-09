@@ -8,6 +8,7 @@ import WeaterInfo from "./WeatherInfo";
 import { LeftCircleOutlined, RightCircleOutlined } from "@ant-design/icons";
 import Seasons, { correctSeason, periodArray } from "./Seasons";
 
+export let pos = "";
 export let dataWeatherEx: any = "";
 export let celcy: string = "°";
 export default function Main() {
@@ -29,16 +30,15 @@ export default function Main() {
 
   useEffect(() => {
     const fetchData = async () => {
-      let pos = "";
       await navigator.geolocation.getCurrentPosition(
         async function (position) {
-          console.log(position.coords.latitude, position.coords.longitude);
+          // console.log(position.coords.latitude, position.coords.longitude);
           let ArrPos = [
             `${position.coords.latitude}`,
             `${position.coords.longitude}`,
           ];
           pos = `${ArrPos[0]},${ArrPos[1]}`; // выводит координаты местоположения пользователя
-          console.log(`${ArrPos[0]},${ArrPos[1]}`);
+          // console.log(`${ArrPos[0]},${ArrPos[1]}`);
 
           if (pos !== "") {
             const res = await fetch(
@@ -47,9 +47,9 @@ export default function Main() {
             const data = await res.json();
             setDataWeather(data);
             setLoading(false);
-            console.log(
-              `https://api.weatherapi.com/v1/current.json?key=${key}&q=${pos}&lang=ru`
-            );
+            // console.log(
+            //   `https://api.weatherapi.com/v1/current.json?key=${key}&q=${pos}&lang=ru`
+            // );
           }
         },
         function (error) {
@@ -58,7 +58,6 @@ export default function Main() {
       );
     };
     fetchData();
-    console.log(dataWeather);
   }, []);
   dataWeatherEx = dataWeather;
 
@@ -114,7 +113,7 @@ export default function Main() {
               id="dop-info"
               className={`${
                 !showDop ? "hidden" : ""
-              } w-full bg-transparent h-screen backdrop-blur-sm max-sm:w-full max-sm:block `}
+              } w-96 bg-transparent h-screen backdrop-blur-sm max-sm:w-full max-sm:block `}
             >
               <WeaterInfo />
             </div>
