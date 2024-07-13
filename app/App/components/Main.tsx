@@ -15,7 +15,7 @@ const client = createClient(
   "zfDfdH7UTT5337hbywB5W58OnJHGwOTiOtNlsIcWtPd1ZBQ0iA8nbDe6"
 );
 
-let query = "Clear";
+let query = "";
 
 export let pos = "";
 export let dataWeatherEx: any = "";
@@ -78,10 +78,12 @@ export default function Main() {
               if (element.code == bgcode) {
                 if (isDay) {
                   bgcodeCurrent = element.day;
+                  console.log(element.day);
                   query = bgcodeCurrent;
                 } else {
                   bgcodeCurrent = element.night;
                   query = bgcodeCurrent;
+                  console.log(element.night);
                 }
                 client.photos.search({ query, per_page: 1 }).then((photos) => {
                   setCurrentBg(photos);
