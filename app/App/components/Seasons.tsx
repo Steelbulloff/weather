@@ -22,7 +22,6 @@ export default function Seasons(): any {
   const [Period, setPeriod] = useState<Number>(11);
   correctSeason = periodArray[Period.toString()];
   useEffect(() => {
-    console.log(mounth);
     if (mounth <= 1 || mounth == 11) {
       console.log("Зима");
       setPeriod(0);
