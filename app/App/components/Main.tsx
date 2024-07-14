@@ -11,8 +11,6 @@ import Seasons, { correctSeason } from "./Seasons";
 import { createClient } from "pexels";
 import { Flex } from "antd";
 import { NewPos } from "./WeatherInfo";
-import { escape } from "querystring";
-import { error } from "console";
 
 const client = createClient(
   "zfDfdH7UTT5337hbywB5W58OnJHGwOTiOtNlsIcWtPd1ZBQ0iA8nbDe6"
@@ -189,7 +187,7 @@ export default function Main() {
               </div>
               <div
                 id="dop-info"
-                className="w-96 bg-transparent h-screen backdrop-blur-sm max-sm:w-full max-sm:block " // {`${!showDop ? "hidden" : ""}}
+                className="w-96 bg-gray-500 bg-opacity-20 h-screen backdrop-blur-sm max-sm:w-full max-sm:block " // {`${!showDop ? "hidden" : ""}}
               >
                 <WeaterInfo />
               </div>
