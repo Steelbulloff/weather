@@ -39,6 +39,12 @@ export default function RootLayout({
                   hoverBorderColor: "transaprent",
                   activeShadow: "none",
                 },
+                Button: {
+                  colorBgContainer: "transparent",
+                  colorBorderBg: "none",
+                  colorBorder: "transparent",
+                  colorTextPlaceholder: "white",
+                },
               },
               token: {
                 colorText: "rgba(255,255,255,1)",
