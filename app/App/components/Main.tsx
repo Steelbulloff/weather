@@ -3,13 +3,16 @@ import Title from "antd/es/typography/Title";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import Loader from "./Loader";
-const WeatherKey = "0e248abb655842a999a160217242306";
+export const WeatherKey = "0e248abb655842a999a160217242306";
 const ImageKey = "zfDfdH7UTT5337hbywB5W58OnJHGwOTiOtNlsIcWtPd1ZBQ0iA8nbDe6";
 import WeaterInfo from "./WeatherInfo";
 import { LeftCircleOutlined, RightCircleOutlined } from "@ant-design/icons";
 import Seasons, { correctSeason } from "./Seasons";
 import { createClient } from "pexels";
 import { Flex } from "antd";
+import { NewPos } from "./WeatherInfo";
+import { escape } from "querystring";
+import { error } from "console";
 
 const client = createClient(
   "zfDfdH7UTT5337hbywB5W58OnJHGwOTiOtNlsIcWtPd1ZBQ0iA8nbDe6"
@@ -17,13 +20,18 @@ const client = createClient(
 
 let query = "";
 
-export let pos = "";
+export let pos: any = "";
 export let dataWeatherEx: any = "";
 export let celcy: string = "°";
 export let bgcode = "";
 export let isDay = 1;
 export let bgcodeBase = [];
 export let bgcodeCurrent = "";
+export const Errors = {
+  errorCity: "Не правильное название города",
+};
+
+export let ActiveError: any = [];
 
 export default function Main() {
   const [dataWeather, setDataWeather] = useState<any>({});
@@ -44,27 +52,45 @@ export default function Main() {
   const timeString = `${hours}:${minutes}:${seconds}`;
 
   useEffect(() => {
+    const callErrors = () => {
+      alert(`${ActiveError}`);
+    };
     const fetchData = async () => {
       await navigator.geolocation.getCurrentPosition(
         async function (position) {
-          // console.log(position.coords.latitude, position.coords.longitude);
           let ArrPos = [
             `${position.coords.latitude}`,
             `${position.coords.longitude}`,
           ];
-          pos = `${ArrPos[0]},${ArrPos[1]}`; // выводит координаты местоположения пользователя
-          // console.log(`${ArrPos[0]},${ArrPos[1]}`);
-
+          pos = (() => {
+            console.log(localStorage.getItem("NewCity"));
+            if (localStorage.getItem("NewCity")) {
+              console.log(localStorage.getItem("NewCity"));
+              return localStorage.getItem("NewCity");
+            } else {
+              return `${ArrPos[0]},${ArrPos[1]}`;
+            }
+          })();
+          console.log(pos);
           if (pos !== "") {
+            console.log(NewPos);
             const res = await fetch(
               `https://api.weatherapi.com/v1/current.json?key=${WeatherKey}&q=${pos}&lang=ru`
             );
             const data = await res.json();
             setDataWeather(data);
-            setLoading(false);
-            console.log(data);
-            bgcode = data.current.condition.code;
-            isDay = data.current.condition.is_day;
+            if (!data.error) {
+              setLoading(false);
+              console.log(data);
+              bgcode = data.current.condition.code;
+              isDay = data.current.condition.is_day;
+            } else {
+              console.log("error city");
+              ActiveError = Errors.errorCity;
+              localStorage.removeItem("NewCity");
+              callErrors();
+              window.location.reload();
+            }
           }
           if (bgcode) {
             setLoading(true);
@@ -128,6 +154,7 @@ export default function Main() {
               </div>
               <div id="location" className=" flex flex-col items-center">
                 <Title>{dataWeather.location.name}</Title>
+                <Title level={4}>({dataWeather.location.country})</Title>
                 <Title>{timeString}</Title>
                 <Title>{time.toDateString()}</Title>
               </div>
