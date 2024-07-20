@@ -10,7 +10,6 @@ import { LeftCircleOutlined, RightCircleOutlined } from "@ant-design/icons";
 import Seasons, { correctSeason } from "./Seasons";
 import { createClient } from "pexels";
 import { Flex } from "antd";
-import { NewPos } from "./WeatherInfo";
 
 const client = createClient(
   "zfDfdH7UTT5337hbywB5W58OnJHGwOTiOtNlsIcWtPd1ZBQ0iA8nbDe6"
@@ -61,17 +60,13 @@ export default function Main() {
             `${position.coords.longitude}`,
           ];
           pos = (() => {
-            console.log(localStorage.getItem("NewCity"));
             if (localStorage.getItem("NewCity")) {
-              console.log(localStorage.getItem("NewCity"));
               return localStorage.getItem("NewCity");
             } else {
               return `${ArrPos[0]},${ArrPos[1]}`;
             }
           })();
-          console.log(pos);
           if (pos !== "") {
-            console.log(NewPos);
             const res = await fetch(
               `https://api.weatherapi.com/v1/current.json?key=${WeatherKey}&q=${pos}&lang=ru`
             );
@@ -79,7 +74,6 @@ export default function Main() {
             setDataWeather(data);
             if (!data.error) {
               setLoading(false);
-              console.log(data);
               bgcode = data.current.condition.code;
               isDay = data.current.condition.is_day;
             } else {
@@ -87,7 +81,7 @@ export default function Main() {
               ActiveError = Errors.errorCity;
               localStorage.removeItem("NewCity");
               callErrors();
-              window.location.reload();
+              // window.location.reload();
             }
           }
           if (bgcode) {

@@ -6,13 +6,13 @@ import { SunOutlined } from "@ant-design/icons";
 
 export default function WeatherDetails() {
   return (
-    <div>
+    <>
       <Title level={3} style={{ fontFamily: "Roboto" }}>
         Сейчас
       </Title>
       <div className="flex flex-col">
         <Title level={4}>{dataWeatherEx.current.condition.text}</Title>
-        {/* Ощущается как */}
+
         <div className="flex justify-between items-center">
           <Typography>Ощущается как</Typography>
           <div className="flex items-center gap-2">
@@ -28,7 +28,7 @@ export default function WeatherDetails() {
             ></Image>
           </div>
         </div>
-        {/* Влажность */}
+
         <div className="flex justify-between items-center">
           <Typography>Влажность</Typography>
           <div className="flex items-center gap-2">
@@ -41,7 +41,7 @@ export default function WeatherDetails() {
             ></Image>
           </div>
         </div>
-        {/* Облачность */}
+
         <div className="flex justify-between items-center">
           <Typography>Облачность</Typography>
           <div className="flex items-center gap-2">
@@ -54,7 +54,7 @@ export default function WeatherDetails() {
             ></Image>
           </div>
         </div>
-        {/* Скорость ветра */}
+
         <div className="flex justify-between items-center">
           <Typography>Скорость ветра</Typography>
           <div className="flex items-center gap-2">
@@ -67,7 +67,7 @@ export default function WeatherDetails() {
             ></Image>
           </div>
         </div>
-        {/* Индекс ультрафиолета */}
+
         <div className="flex justify-between items-center">
           <Typography>Индекс ультрафиолета</Typography>
           <div className="flex items-center gap-2">
@@ -76,6 +76,6 @@ export default function WeatherDetails() {
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }
