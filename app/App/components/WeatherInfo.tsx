@@ -3,18 +3,10 @@ import Search from "antd/es/input/Search";
 import WeaterFuture from "./WeatherFuture";
 import { Button } from "antd";
 import { pos } from "./Main";
+import { DeleteLocal, Searching } from "@/app/core/provider/functions";
+import { IsNewCity } from "@/app/core/provider/consts";
 
 export default function WeaterInfo() {
-  const DeleteLocal = () => {
-    localStorage.removeItem("NewCity");
-    // window.location.reload();
-  };
-
-  const Searching = (value: any) => {
-    window.localStorage.setItem("NewCity", `${value}`);
-    // window.location.reload();
-  };
-
   return (
     <div className=" bg-transparent h-screen backdrop-blur-sm flex flex-col gap-4 p-2 overflow-auto ">
       <Search
@@ -24,12 +16,15 @@ export default function WeaterInfo() {
         enterButton={true}
         onSearch={(value) => Searching(value)}
       />
-      <div className={!window.localStorage.getItem("NewCity") ? "hidden" : ""}>
+
+      <div className={!IsNewCity ? "hidden" : ""}>
         <div className="flex items-center justify-center ">
           <div>Погода в городе {pos}</div>
+
           <Button onClick={() => DeleteLocal()}>Сбросить поиск</Button>
         </div>
       </div>
+
       <WeatherDetails />
       <WeaterFuture />
     </div>

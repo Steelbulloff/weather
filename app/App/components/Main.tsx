@@ -3,128 +3,95 @@ import Title from "antd/es/typography/Title";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import Loader from "./Loader";
-export const WeatherKey = "0e248abb655842a999a160217242306";
-const ImageKey = "zfDfdH7UTT5337hbywB5W58OnJHGwOTiOtNlsIcWtPd1ZBQ0iA8nbDe6";
 import WeaterInfo from "./WeatherInfo";
-import { LeftCircleOutlined, RightCircleOutlined } from "@ant-design/icons";
-import Seasons, { correctSeason } from "./Seasons";
-import { createClient } from "pexels";
 import { Flex } from "antd";
-
-const client = createClient(
-  "zfDfdH7UTT5337hbywB5W58OnJHGwOTiOtNlsIcWtPd1ZBQ0iA8nbDe6"
-);
-
-let query = "";
+import Localtime from "./Localtime";
+import { CLIENT, WEATHER_KEY } from "@/app/core/provider/API";
+import { Errors, IsNewCity, RemNewCity } from "@/app/core/provider/consts";
+import { callErrors } from "@/app/core/provider/functions";
 
 export let pos: any = "";
 export let dataWeatherEx: any = "";
-export let celcy: string = "°";
-export let bgcode = "";
-export let isDay = 1;
-export let bgcodeBase = [];
-export let bgcodeCurrent = "";
-export const Errors = {
-  errorCity: "Не правильное название города",
-};
+export let bgcode: string = "";
 
 export let ActiveError: any = [];
 
 export default function Main() {
   const [dataWeather, setDataWeather] = useState<any>({});
   const [loading, setLoading] = useState(true);
-  const [time, setTime] = useState(new Date());
   const [currentBg, setCurrentBg] = useState<any>({});
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setTime(new Date());
-    }, 1000);
-    return () => clearInterval(interval);
-  }, []);
-
-  const hours = time.getHours();
-  const minutes = time.getMinutes();
-  const seconds = time.getSeconds();
-  const timeString = `${hours}:${minutes}:${seconds}`;
+  let query = "";
+  let isDay = 1;
 
   useEffect(() => {
-    const callErrors = () => {
-      alert(`${ActiveError}`);
-    };
     const fetchData = async () => {
-      await navigator.geolocation.getCurrentPosition(
-        async function (position) {
-          let ArrPos = [
-            `${position.coords.latitude}`,
-            `${position.coords.longitude}`,
-          ];
-          pos = (() => {
-            if (localStorage.getItem("NewCity")) {
-              return localStorage.getItem("NewCity");
-            } else {
-              return `${ArrPos[0]},${ArrPos[1]}`;
-            }
-          })();
-          if (pos !== "") {
-            const res = await fetch(
-              `https://api.weatherapi.com/v1/current.json?key=${WeatherKey}&q=${pos}&lang=ru`
-            );
-            const data = await res.json();
-            setDataWeather(data);
-            if (!data.error) {
-              setLoading(false);
-              bgcode = data.current.condition.code;
-              isDay = data.current.condition.is_day;
-            } else {
-              console.log("error city");
-              ActiveError = Errors.errorCity;
-              localStorage.removeItem("NewCity");
-              callErrors();
-              // window.location.reload();
-            }
+      navigator.geolocation.getCurrentPosition(async function (position) {
+        let ArrPos = [
+          `${position.coords.latitude}`,
+          `${position.coords.longitude}`,
+        ];
+        pos = (() => {
+          if (IsNewCity) {
+            return IsNewCity;
+          } else {
+            return `${ArrPos[0]},${ArrPos[1]}`;
           }
-          if (bgcode) {
-            setLoading(true);
-            const res = await fetch(
-              "https://www.weatherapi.com/docs/weather_conditions.json"
-            );
-            const data = await res.json();
-            bgcodeBase = data;
-            console.log(bgcodeBase);
-            await bgcodeBase.forEach((element: any) => {
-              if (element.code == bgcode) {
-                if (isDay) {
-                  bgcodeCurrent = element.day;
-                  console.log(element.day);
-                  query = bgcodeCurrent;
-                } else {
-                  bgcodeCurrent = element.night;
-                  query = bgcodeCurrent;
-                  console.log(element.night);
-                }
-                client.photos.search({ query, per_page: 1 }).then((photos) => {
-                  setCurrentBg(photos);
-                  setLoading(false);
-                  console.log(photos);
-                });
-              }
+        })();
+        if (pos) {
+          const res = await fetch(
+            `https://api.weatherapi.com/v1/current.json?key=${WEATHER_KEY}&q=${pos}&lang=ru`
+          );
+          const data = await res.json();
+
+          if (!data.error) {
+            setDataWeather(data);
+            console.log(data);
+            setLoading(false);
+            bgcode = data.current.condition.code;
+            if (isDay !== data.current.is_day) {
+              isDay = 0;
+            }
+          } else {
+            console.log("error city");
+            ActiveError = Errors.errorCity;
+            RemNewCity;
+            callErrors();
+            window.location.reload();
+          }
+        }
+        if (bgcode) {
+          setLoading(true);
+          const res = await fetch(
+            "https://www.weatherapi.com/docs/weather_conditions.json"
+          );
+          const data = await res.json();
+          console.log(data);
+          const finded_bg_code = data.find(
+            (element: any) => element.code == bgcode
+          );
+
+          if (finded_bg_code) {
+            console.log(finded_bg_code);
+            if (isDay) {
+              query = finded_bg_code.day;
+            } else {
+              query = finded_bg_code.night;
+            }
+            CLIENT.photos.search({ query, per_page: 1 }).then((photos) => {
+              setCurrentBg(photos);
+              setLoading(false);
             });
           }
-        },
-        function (error) {
-          console.log(error.message); // выводит сообщение об ошибке
         }
-      );
+      });
     };
     fetchData();
   }, []);
   dataWeatherEx = dataWeather;
 
-  const [showDop, setShowDop] = useState(false);
-
   return (
-    <div id={correctSeason} className="overflow-auto bg-slate-500  ">
+    <div className="overflow-auto bg-slate-500  ">
       {loading ? (
         <Loader />
       ) : (
@@ -137,19 +104,20 @@ export default function Main() {
             backgroundRepeat: "no-repeat",
           }}
         >
-          <div className="flex max-sm:flex-col    ">
-            <div className="flex w-full gap-2 items-center justify-center max-sm:flex-col h-screen ">
+          <div className="flex max-sm:flex-col">
+            <div className="flex w-full gap-2 items-center justify-center max-sm:flex-col h-screen">
               <div id="temperature" className="">
                 <Title style={{ fontSize: "70px" }}>
                   {dataWeather.current.temp_c}°
                 </Title>
               </div>
+
               <div id="location" className=" flex flex-col items-center">
                 <Title>{dataWeather.location.name}</Title>
                 <Title level={4}>({dataWeather.location.country})</Title>
-                <Title>{timeString}</Title>
-                <Title>{time.toDateString()}</Title>
+                <Localtime />
               </div>
+
               <Image
                 src={`${dataWeather.current.condition.icon}`}
                 height={50}
@@ -158,27 +126,8 @@ export default function Main() {
                 priority={false}
               />
             </div>
+
             <div className="flex items-start ">
-              <div id="show-hidden-buttons" className="hidden max-sm:hidden">
-                <div
-                  id="show-button"
-                  className={`${showDop ? "hidden" : ""}`}
-                  onClick={() => {
-                    setShowDop(true);
-                  }}
-                >
-                  <LeftCircleOutlined style={{ fontSize: "64px" }} />
-                </div>
-                <div
-                  id="hidden-button"
-                  className={`${!showDop ? "hidden" : ""}`}
-                  onClick={() => {
-                    setShowDop(false);
-                  }}
-                >
-                  <RightCircleOutlined style={{ fontSize: "64px" }} />
-                </div>
-              </div>
               <div
                 id="dop-info"
                 className="w-96 bg-gray-500 bg-opacity-20 h-screen backdrop-blur-sm max-sm:w-full max-sm:block " // {`${!showDop ? "hidden" : ""}}
@@ -189,7 +138,6 @@ export default function Main() {
           </div>
         </Flex>
       )}
-      <Seasons />
     </div>
   );
 }
