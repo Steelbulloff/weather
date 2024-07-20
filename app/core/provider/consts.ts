@@ -1,19 +1,14 @@
-import { AnyTxtRecord } from "dns";
-
 export const CELCY: string = "°";
-export let bgcode = "";
-export const Errors = {
+export const errors = {
   errorCity: "Не правильное название города",
 };
-
-export let IsNewCity:any
-
-export let RemNewCity :void 
+export let isNewCity:string|null;
+export let remNewCity :void 
+export let activeError = [];
 
 if (typeof window !== 'undefined') {
   // Safely access localStorage
- IsNewCity = localStorage.getItem("NewCity");
- RemNewCity = localStorage.removeItem("NewCity");
+ isNewCity = localStorage.getItem("NewCity");
+ remNewCity = localStorage.removeItem("NewCity");
 }
 
-export let ActiveError = [];

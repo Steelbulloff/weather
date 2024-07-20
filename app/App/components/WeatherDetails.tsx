@@ -1,12 +1,11 @@
 import { Typography } from "antd";
-import { dataWeatherEx } from "./Main";
 import Title from "antd/es/typography/Title";
 import Image from "next/image";
 import { SunOutlined } from "@ant-design/icons";
 import { CELCY } from "@/app/core/provider/consts";
 
-export default function WeatherDetails() {
-  const WeatherEX = dataWeatherEx.current;
+export default function WeatherDetails({ data }: any) {
+  data = data.current;
   return (
     <>
       <Title level={3} style={{ fontFamily: "Roboto" }}>
@@ -14,14 +13,14 @@ export default function WeatherDetails() {
       </Title>
 
       <div className="flex flex-col">
-        <Title level={4}>{WeatherEX.condition.text}</Title>
+        <Title level={4}>{data.condition.text}</Title>
 
         <div className="flex justify-between items-center">
           <Typography>Ощущается как</Typography>
 
           <div className="flex items-center gap-2">
             <Typography>
-              {WeatherEX.feelslike_c}
+              {data.feelslike_c}
               {CELCY}
             </Typography>
 
@@ -38,7 +37,7 @@ export default function WeatherDetails() {
           <Typography>Влажность</Typography>
 
           <div className="flex items-center gap-2">
-            <Typography>{WeatherEX.humidity}%</Typography>
+            <Typography>{data.humidity}%</Typography>
 
             <Image
               width={16}
@@ -53,7 +52,7 @@ export default function WeatherDetails() {
           <Typography>Облачность</Typography>
 
           <div className="flex items-center gap-2">
-            <Typography>{WeatherEX.cloud}%</Typography>
+            <Typography>{data.cloud}%</Typography>
 
             <Image
               width={16}
@@ -68,7 +67,7 @@ export default function WeatherDetails() {
           <Typography>Скорость ветра</Typography>
 
           <div className="flex items-center gap-2">
-            <Typography>{WeatherEX.wind_kph} Км/ч</Typography>
+            <Typography>{data.wind_kph} Км/ч</Typography>
 
             <Image
               width={16}
@@ -83,7 +82,7 @@ export default function WeatherDetails() {
           <Typography>Индекс ультрафиолета</Typography>
 
           <div className="flex items-center gap-2">
-            <Typography>{WeatherEX.uv}</Typography>
+            <Typography>{data.uv}</Typography>
 
             <SunOutlined />
           </div>

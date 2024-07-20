@@ -1,15 +1,15 @@
-import { ActiveError } from "./consts";
+import { activeError } from "./consts";
 
-export const DeleteLocal = () => {
+export const deleteLocal = () => {
     localStorage.removeItem("NewCity");
     window.location.reload();
 };
 
-export const Searching = (value: any) => {
+export const searching = (value: string) => {
     window.localStorage.setItem("NewCity", `${value}`);
     window.location.reload();
 };
 
 export const callErrors = () => {
-    alert(`${ActiveError}`);
+    alert(`${activeError}`);
 };

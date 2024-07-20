@@ -1,7 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
 import Loader from "./Loader";
-import { pos } from "./Main";
 import Title from "antd/es/typography/Title";
 import { Typography } from "antd";
 import Image from "next/image";
@@ -9,15 +8,19 @@ import { SunOutlined } from "@ant-design/icons";
 import { CELCY } from "@/app/core/provider/consts";
 import { WEATHER_KEY } from "@/app/core/provider/API";
 
-export default function WeaterFuture() {
+interface WeaterFutureProps {
+  position: string;
+}
+
+export default function WeaterFuture({ position }: WeaterFutureProps) {
   const [dataWeatherF, setDataWeatherF] = useState<any>({});
   const [dataWeatherFArray, setDataWeatherFArray] = useState([]);
   const [loading, setLoading] = useState(true);
   useEffect(() => {
     const fetchData = async () => {
-      if (pos) {
+      if (position) {
         const res = await fetch(
-          `https://api.weatherapi.com/v1/forecast.json?key=${WEATHER_KEY}&q=${pos}&lang=ru`
+          `https://api.weatherapi.com/v1/forecast.json?key=${WEATHER_KEY}&q=${position}&lang=ru`
         );
         const data = await res.json();
         setDataWeatherF(data.forecast.forecastday[0].day);
