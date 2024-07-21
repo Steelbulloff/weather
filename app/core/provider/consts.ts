@@ -4,7 +4,6 @@ export const errors = {
 };
 export let isNewCity:string|null;
 export let remNewCity :void 
-export let activeError = [];
 
 if (typeof window !== 'undefined') {
   // Safely access localStorage

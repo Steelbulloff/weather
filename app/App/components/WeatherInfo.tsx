@@ -5,7 +5,7 @@ import { Button } from "antd";
 import { deleteLocal, searching } from "@/app/core/provider/functions";
 import { isNewCity } from "@/app/core/provider/consts";
 
-export default function WeaterInfo({ data, position, setCity }: any) {
+export default function WeaterInfo({ data, position }: any) {
   return (
     <div className=" bg-transparent h-screen backdrop-blur-sm flex flex-col gap-4 p-2 overflow-auto ">
       <Search
