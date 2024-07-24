@@ -1,4 +1,4 @@
-import { activeError } from "./consts";
+import { activeError } from "@/app/App/components/Main";
 
 export const deleteLocal = () => {
     localStorage.removeItem("NewCity");
