@@ -19,18 +19,20 @@ export default function Main() {
 
   useEffect(() => {
     getCurrentPosition();
+    setIsLoading(false);
   }, []);
 
-  useEffect(() => {
-    setIsLoading(true);
-    if (currentWeatherBg !== null) {
-      let query = currentWeatherBg;
-      CLIENT.photos.search({ query, per_page: 1 }).then((photos) => {
-        setCurrentBg(photos);
-        setIsLoading(false);
-      });
-    }
-  }, [currentWeatherBg]);
+  // useEffect(() => {
+  // setIsLoading(true);
+  // if (currentWeatherBg !== null) {
+  //   let query = currentWeatherBg;
+  //   CLIENT.photos.search({ query, per_page: 1 }).then((photos) => {
+  //     setCurrentBg(photos);
+  //     setIsLoading(false);
+  //   });
+  // }
+
+  // }, [currentWeatherBg]);
   return (
     <div className="overflow-auto bg-slate-500  ">
       {isLoading ? (
@@ -39,7 +41,8 @@ export default function Main() {
         <Flex
           vertical
           style={{
-            backgroundImage: `url(${currentBg.photos[0].src.original})`,
+            // backgroundImage: `url(${currentBg.photos[0].src.original})`,
+            backgroundImage: `url(https://cdn.ingos.ru/images/blog/samye-krasivye-vodopady-mira.jpg)`,
             backgroundAttachment: "fixed",
             backgroundSize: "100% 100%",
             backgroundRepeat: "no-repeat",
